@@ -102,3 +102,15 @@ createdb trivia_test
 psql trivia_test < trivia.psql
 python test_flaskr.py
 ```
+page = request.args.get('page', 1, type=int)
+        start = (page - 1) * QUESTIONS_PER_PAGE
+        end = start + QUESTIONS_PER_PAGE
+        questions = Question.query.all()
+        question_format = [Question.format() for question in questions]
+
+        return jsonify({
+            'success':True,
+            'question':question_format[start:end],
+            'total_question':len(question_format),
+            'categories':[Category]
+        })
